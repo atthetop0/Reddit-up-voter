@@ -1,8 +1,12 @@
 var enable_disable = document.querySelector("input[id=run]");
 var random_enable_disable = document.querySelector("input[id=random]");
 var all_enable_disable = document.querySelector("input[id=all]");
-enable_disable.checked = true;
-random_enable_disable.checked = true;
+enable_disable.checked = false;
+random_enable_disable.checked = false;
+all_enable_disable.checked = false;
+random_enable_disable.disabled = true;
+all_enable_disable.disabled = true;
+
 
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
@@ -26,8 +30,12 @@ enable_disable.addEventListener('change', function () {
                 document.getElementById('text').innerHTML = response.enabled;
             });
         });
+		
         document.getElementById('random').disabled = false;
         document.getElementById('all').disabled = false;
+		
+		random_enable_disable.checked = true;
+		all_enable_disable.checked = false;
     } else {
         chrome.storage.sync.set({
             run_reddit_upvoter: false
